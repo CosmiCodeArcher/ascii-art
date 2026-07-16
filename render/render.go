@@ -2,10 +2,11 @@ package render
 
 import (
 	"fmt"
+	"io"
 	"strings"
 )
 
-func Render(charMap map[rune][]string, lines []string) {
+func Render(w io.Writer, charMap map[rune][]string, lines []string) {
 	for _, line := range lines {
 		if line == "" {
 			fmt.Println()
@@ -19,7 +20,7 @@ func Render(charMap map[rune][]string, lines []string) {
 					rowBuilder.WriteString(charRowSlice[row])
 				}
 			}
-			fmt.Println(rowBuilder.String())
+			fmt.Fprintln(w, rowBuilder.String())
 		}
 	}
 }
