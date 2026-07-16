@@ -11,7 +11,7 @@ import (
 
 var bannerNameErr = "Avalaible Banners: standard, shadow, thinkertoy"
 
-func ProcessInput(text, bannerName string) {
+func ProcessInput(outputFile, text, bannerName string) {
 	var bannerFilePath string
 	bannerName = strings.ToLower(bannerName)
 
@@ -19,7 +19,7 @@ func ProcessInput(text, bannerName string) {
 	case "standard", "shadow", "thinkertoy":
 		bannerFilePath = "banners/" + bannerName + ".txt"
 	default:
-		fmt.Fprintf(os.Stderr, bannerNameErr)
+		fmt.Fprintln(os.Stderr, bannerNameErr)
 		return
 	}
 
@@ -31,5 +31,13 @@ func ProcessInput(text, bannerName string) {
 
 	ParsedInput := parser.ParseInput(text)
 
-	render.Render(os.Stdout, LoadedBanner, ParsedInput)
+	if outputFile != "" {
+		openOutputFile, err := os.Create(outputFile)
+		if err != nil {
+			fmt.Fprintln(os.Stderr, err)
+		}
+		render.Render(openOutputFile, LoadedBanner, ParsedInput)
+	} else {
+		render.Render(os.Stdout, LoadedBanner, ParsedInput)
+	}
 }
