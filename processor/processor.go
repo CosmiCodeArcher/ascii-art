@@ -41,7 +41,7 @@ func ProcessInput(outputFile, text, bannerName string) {
 		defer openOutputFile.Close()
 
 		render.Render(openOutputFile, LoadedBanner, ParsedInput)
-		
+
 	} else {
 		render.Render(os.Stdout, LoadedBanner, ParsedInput)
 	}
