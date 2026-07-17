@@ -32,11 +32,16 @@ func ProcessInput(outputFile, text, bannerName string) {
 	ParsedInput := parser.ParseInput(text)
 
 	if outputFile != "" {
+
 		openOutputFile, err := os.Create(outputFile)
 		if err != nil {
 			fmt.Fprintln(os.Stderr, err)
+			return
 		}
+		defer openOutputFile.Close()
+
 		render.Render(openOutputFile, LoadedBanner, ParsedInput)
+		
 	} else {
 		render.Render(os.Stdout, LoadedBanner, ParsedInput)
 	}
