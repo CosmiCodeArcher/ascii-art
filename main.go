@@ -27,9 +27,11 @@ func main() {
 		return
 	case 2:
 		processor.ProcessInput("", os.Args[1], "standard")
+		return
 	case 3:
 		if !strings.HasPrefix(os.Args[1], "--output=") {
-		 processor.ProcessInput("", os.Args[1], os.Args[2])
+			processor.ProcessInput("", os.Args[1], os.Args[2])
+			return
 		}
 	}
 
